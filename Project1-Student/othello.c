@@ -6,6 +6,8 @@
 
 #include "othello.h"
 
+// Delaney and Jeni
+
 // Constructs and returns a string representation of the board
 // IMPORTANT: DO NOT MAKE ANY CHANGES TO THIS FUNCTION
 char *toString(int size, char board[][size])
@@ -42,13 +44,13 @@ void initializeBoard(int size, char board[][size])
 {
 	for(int i = 0; i < 8; i++){
 		for(int j = 0; j < 8; j++){
-			board[i][j] = '-';
+			board[i][j] = EMPTY;
 		}
 	}
-	board[3][3] = 'B';
-	board[4][4] = 'B';
-	board[3][4] = 'W';
-	board[4][3] = 'W';
+	board[3][3] = BLACK;
+	board[4][4] = BLACK;
+	board[3][4] = WHITE;
+	board[4][3] = WHITE;
 	// COMPLETE THIS FUNCTION
 }
 
@@ -56,18 +58,111 @@ void initializeBoard(int size, char board[][size])
 // Use isValidMove() to implement this function
 bool isValidMoveAvailable(int size, char board[][size], char disc)
 {
-	return false; // REPLACE THIS WITH YOUR IMPLEMENTATION
+        
+	// return false; // REPLACE THIS WITH YOUR IMPLEMENTATION
 }
 
 // Returns true if moving the disc to location row,col is valid; false otherwise
 bool isValidMove(int size, char board[][size], int row, int col, char disc)
 {
+	if (row > 7 or col > 7 or row < 0 or col < 0){
+		return false;
+	}
 	if (board[row][col] != EMPTY)
 	{
 		return false;
 	}
+	
+	if (disc == BLACK){
+		// top to bottom, check rows
+		for (int i = 0; i <= 7; i++){
+		if (i < row and board[i][col] == BLACK){
+			if(board[row-1][col] == WHITE){
+				return true;
+			}
+		}
+                if (i >= row and board[i][col] == BLACK){
+                        if(board[row+1][col] == WHITE){
+                                return true;
+                        }
+                }
+		} // for
+	                
+		// left to right, check cols
+		for (int j = 0; j <= 7; j++){
+                if (j < col and board[row][j] == BLACK){
+                        if(board[row][col-1] == WHITE){
+                                return true;
+                        }
+                }
+                if (j >= col and board[row][j] == BLACK){
+                        if(board[row][col+1] == WHITE){
+                                return true;
+                        }
+                }
+                } // for
 
-	return false; // REPLACE THIS WITH YOUR IMPLEMENTATION
+		// top left to bottom right diagonal
+		int i = row;
+		int j = col;
+		while (i <= 7 or j <= 7){
+			if (board[row+1][col+1] == WHITE and board[i][j] == BLACK){
+				return true;
+			}		
+			else{
+				break;
+			}
+			i ++;
+			j ++;
+			
+		} // while
+
+                i = row;
+                j = col;
+                while (i >= 0 or j >= 0){
+                        if (board[row-1][col-1] == WHITE and board[i][j] == BLACK){
+                                return true;
+                        }
+                        else{
+                                break;
+                        }
+                        i --;
+                        j --;
+
+                } // while
+		
+
+		// top right to bottom left
+		int i = row;
+		int j = col;
+                while (i >= 0 or j <= 7){
+                        if (board[row-1][col+1] == WHITE and board[i][j] == BLACK){
+                                return true;
+                        }
+                        else{
+                                break;
+                        }
+                        i --;
+                        j ++;
+
+                } // while
+
+                int i = row;
+                int j = col;
+                while (i <= 7 or j >= 0){
+                        if (board[row+1][col-1] == WHITE and board[i][j] == BLACK){
+                                return true;
+                        }
+                        else{
+                                break;
+                        }
+                        i ++;
+                        j --;
+
+                } // while	
+
+	} // if BLACK
+	
 }
 
 // Places the disc at location row,col and flips the opponent discs as needed
