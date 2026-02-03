@@ -40,6 +40,15 @@ char *toString(int size, char board[][size])
 // Ssee project specifications for initial board configuration
 void initializeBoard(int size, char board[][size])
 {
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < 8; j++){
+			board[i][j] = '-';
+		}
+	}
+	board[3][3] = 'B';
+	board[4][4] = 'B';
+	board[3][4] = 'W';
+	board[4][3] = 'W';
 	// COMPLETE THIS FUNCTION
 }
 
