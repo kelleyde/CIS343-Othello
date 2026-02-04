@@ -58,8 +58,17 @@ void initializeBoard(int size, char board[][size])
 // Use isValidMove() to implement this function
 bool isValidMoveAvailable(int size, char board[][size], char disc)
 {
-        
-	// return false; // REPLACE THIS WITH YOUR IMPLEMENTATION
+	for (int i = 0; i < 8; i++){
+		for (int j = 0; j < 8; j++) {
+			if (board[i][j] == EMPTY) {
+				if (isValidMove(size, board, i, j, disc)){
+					return true;
+				}
+			}
+		}
+	} 
+
+	return false;
 }
 
 // Returns true if moving the disc to location row,col is valid; false otherwise
@@ -70,9 +79,6 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 	}
 	if (board[row][col] != EMPTY)
 	{
-		return false;
-	}
-	if (!isValidMoveAvailable(size, board, disc)){
 		return false;
 	}
 
@@ -208,7 +214,8 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 
                 }
         }
-	
+
+	return false;
 
 
 } // Is Valid Move
@@ -218,17 +225,19 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 {
 	if (!isValidMove(size, board, row, col, disc))
 	{	
-		printf("Is not valid move");
+		// printf("Is not valid move");
 		return;
 	}
 
 	board[row][col] = disc;
-	
+	// list for storing possible disc positions
+	int pos[];
+
 	// diagonals
         int i = 0;
         int j = 0;
 
-        if (board[row+1][col+1] == !disc) {
+        if (board[row+1][col+1] != disc && board[row+1][col+1] != EMPTY) {
                 while((row + i) < 7 || (col + j) < 7){
                         i ++;
                         j ++;
@@ -243,7 +252,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
         i = 0;
         j = 0;
 
-        if (board[row-1][col-1] == !disc) {
+        if (board[row-1][col-1] != disc && board[row-1][col-1] != EMPTY) {
                 while((row - i) > 0 || (col - j) > 0){
                         i ++;
                         j ++;
@@ -258,7 +267,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 	i = 0;
 	j = 0;
 
-        if (board[row-1][col+1] == !disc) {
+        if (board[row-1][col+1] != disc && board[row-1][col+1] != EMPTY) {
                 while((row - i) > 0 || (col + j) < 7){
                         i ++;
                         j ++;
@@ -273,7 +282,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
         i = 0;
         j = 0;
 
-        if (board[row+1][col-1] == !disc) {
+        if (board[row+1][col-1] != disc && board[row+1][col-1] != EMPTY) {
                 while((row + i) < 7 || (col - j) > 0){
                         i ++;
                         j ++;
@@ -288,7 +297,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 	// Up/down
 	i = 0;
 
-        if (board[row+1][col] == !disc) {
+        if (board[row+1][col] != disc && board[row+1][col] != EMPTY) {
                 while((row + i) < 7){
                         i ++;
                         if (board[row + i][col] == EMPTY){
@@ -302,7 +311,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 
         i = 0;
 
-        if (board[row-1][col] == !disc) {
+        if (board[row-1][col] != disc && board[row-1][col] != EMPTY) {
                 while((row - i) > 0){
                         i ++;
                         if (board[row - i][col] == EMPTY){
@@ -315,7 +324,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
         }
 	// Left/right 
         j = 0;
-        if (board[row][col+1] == !disc) {
+        if (board[row][col+1] != disc && board[row][col+1] != EMPTY) {
                 while((col + i) < 7){
                         j ++;
                         if (board[row][col + j] == EMPTY){
@@ -328,7 +337,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
         }
 
         j = 0;
-        if (board[row][col-1] == !disc) {
+        if (board[row][col-1] != disc && board[row][col-1] != EMPTY) {
                 while((col - i) > 0){
                         j ++;
                         if (board[row][col - j] == EMPTY){
