@@ -65,128 +65,305 @@ bool isValidMoveAvailable(int size, char board[][size], char disc)
 // Returns true if moving the disc to location row,col is valid; false otherwise
 bool isValidMove(int size, char board[][size], int row, int col, char disc)
 {
-	if (row > 7 or col > 7 or row < 0 or col < 0){
+	if (row > 7 || col > 7 || row < 0 || col < 0){
 		return false;
 	}
 	if (board[row][col] != EMPTY)
 	{
 		return false;
 	}
-	
-	if (disc == BLACK){
-		// top to bottom, check rows
-		for (int i = 0; i <= 7; i++){
-		if (i < row and board[i][col] == BLACK){
-			if(board[row-1][col] == WHITE){
-				return true;
-			}
-		}
-                if (i >= row and board[i][col] == BLACK){
-                        if(board[row+1][col] == WHITE){
-                                return true;
-                        }
-                }
-		} // for
-	                
-		// left to right, check cols
-		for (int j = 0; j <= 7; j++){
-                if (j < col and board[row][j] == BLACK){
-                        if(board[row][col-1] == WHITE){
-                                return true;
-                        }
-                }
-                if (j >= col and board[row][j] == BLACK){
-                        if(board[row][col+1] == WHITE){
-                                return true;
-                        }
-                }
-                } // for
+	if (!isValidMoveAvailable(size, board, disc)){
+		return false;
+	}
 
-		// top left to bottom right diagonal
-		int i = row;
-		int j = col;
-		while (i <= 7 or j <= 7){
-			if (board[row+1][col+1] == WHITE and board[i][j] == BLACK){
-				return true;
-			}		
-			else{
-				break;
-			}
-			i ++;
+	// diagonals 
+	int i = 0;
+	int j = 0;
+
+	if (board[row+1][col+1] != disc && board[row+1][col+1] != EMPTY) {
+		while((row + i) < 7 || (col + j) < 7){
+		 	i ++;
 			j ++;
-			
-		} // while
-
-                i = row;
-                j = col;
-                while (i >= 0 or j >= 0){
-                        if (board[row-1][col-1] == WHITE and board[i][j] == BLACK){
-                                return true;
-                        }
-                        else{
+			if (board[row + i][col + j] == disc){
+				return true;
+		  	}
+			else if (board[row + i][col + j] == EMPTY){
                                 break;
                         }
-                        i --;
-                        j --;
 
-                } // while
-		
+		}
+	}
 
-		// top right to bottom left
-		int i = row;
-		int j = col;
-                while (i >= 0 or j <= 7){
-                        if (board[row-1][col+1] == WHITE and board[i][j] == BLACK){
-                                return true;
-                        }
-                        else{
-                                break;
-                        }
-                        i --;
-                        j ++;
+        i = 0;
+        j = 0;
 
-                } // while
-
-                int i = row;
-                int j = col;
-                while (i <= 7 or j >= 0){
-                        if (board[row+1][col-1] == WHITE and board[i][j] == BLACK){
-                                return true;
-                        }
-                        else{
-                                break;
-                        }
+	if (board[row-1][col-1] != disc && board[row-1][col-1] != EMPTY) {
+                while((row - i) > 0 || (col - j) > 0){
                         i ++;
-                        j --;
+                        j ++;
+                        if (board[row - i][col - j] == disc){
+                                return true;
+                        }
+                        else if (board[row - i][col - j] == EMPTY){
+                                break;
+                        }
 
-                } // while	
+                }
+        }
 
-	} // if BLACK
+        i = 0;
+        j = 0;
+
+	if (board[row-1][col+1] != disc && board[row-1][col+1] != EMPTY) {
+                while((row - i) > 0 || (col + j) < 7){
+                        i ++;
+                        j ++;
+                        if (board[row - i][col + j] == disc){
+                                return true;
+                        }
+                        else if (board[row - i][col + j] == EMPTY){
+                                break;
+                        }
+
+                }
+        }
+
+
+
+	i = 0;
+        j = 0;
+
+	if (board[row+1][col-1] != disc && board[row+1][col-1] != EMPTY) {
+                while((row + i) < 7 || (col - j) > 0){
+                        i ++;
+                        j ++;
+                        if (board[row + i][col - j] == disc){
+                                return true;
+                        }
+                        else if (board[row + i][col - j] == EMPTY){
+                                break;
+                        }
+
+                }
+        }
+
+	// Up/down
 	
-}
+	i = 0;
+
+	if (board[row+1][col] != disc && board[row+1][col] != EMPTY) {
+                while((row + i) < 7){
+                        i ++;
+                        if (board[row + i][col] == disc){
+                                return true;
+                        }
+                        else if (board[row + i][col] == EMPTY){
+                                break;
+                        }
+
+                }
+        }
+
+	i = 0;
+	
+        if (board[row-1][col] != disc && board[row-1][col] != EMPTY) {
+                while((row - i) > 0){
+                        i ++;
+                        if (board[row - i][col] == disc){
+                                return true;
+                        }
+                        else if (board[row - i][col] == EMPTY){
+                                break;
+                        }
+
+                }
+        }
+
+	// Left/right
+	
+	j = 0;
+        if (board[row][col+1] != disc && board[row][col+1] != EMPTY) {
+                while((col + i) < 7){
+                        j ++;
+                        if (board[row][col + j] == disc){
+                                return true;
+                        }
+                        else if (board[row][col + j] == EMPTY){
+                                break;
+                        }
+
+                }
+        }
+
+        j = 0;
+        if (board[row][col-1] == disc && board[row][col-1] != EMPTY) {
+                while((col - i) > 0){
+                        j ++;
+                        if (board[row][col - j] == disc){
+                                return true;
+                        }
+                        else if (board[row][col - j] == EMPTY){
+                                break;
+                        }
+
+                }
+        }
+	
+
+
+} // Is Valid Move
 
 // Places the disc at location row,col and flips the opponent discs as needed
 void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 {
 	if (!isValidMove(size, board, row, col, disc))
-	{
+	{	
+		printf("Is not valid move");
 		return;
 	}
 
-	// COMPLETE REST OF THIS FUNCTION
-}
+	board[row][col] = disc;
+	
+	// diagonals
+        int i = 0;
+        int j = 0;
+
+        if (board[row+1][col+1] == !disc) {
+                while((row + i) < 7 || (col + j) < 7){
+                        i ++;
+                        j ++;
+                        if (board[row + i][col + j] == EMPTY){
+                                break;
+                        }
+			else if (board[row + i][col + j] != disc){
+                                board[row + i][col + j] = disc;
+                        }
+                }
+        }
+        i = 0;
+        j = 0;
+
+        if (board[row-1][col-1] == !disc) {
+                while((row - i) > 0 || (col - j) > 0){
+                        i ++;
+                        j ++;
+                        if (board[row - i][col - j] == EMPTY){
+                                break;
+                        }
+			else if (board[row - i][col - j] != disc){
+                                board[row - i][col - j] = disc;
+                        }
+                }
+        }
+	i = 0;
+	j = 0;
+
+        if (board[row-1][col+1] == !disc) {
+                while((row - i) > 0 || (col + j) < 7){
+                        i ++;
+                        j ++;
+                        if (board[row - i][col + j] == EMPTY){
+                                break;
+                        }
+			else if (board[row - i][col + j] != disc){
+                                board[row - i][col + j] = disc;
+                        }
+		}
+        }
+        i = 0;
+        j = 0;
+
+        if (board[row+1][col-1] == !disc) {
+                while((row + i) < 7 || (col - j) > 0){
+                        i ++;
+                        j ++;
+                        if (board[row + i][col - j] == EMPTY){
+                                break;
+                        }
+			else if (board[row + i][col - j] != disc){
+                                board[row + i][col - j] = disc;
+                        }
+                }
+        }
+	// Up/down
+	i = 0;
+
+        if (board[row+1][col] == !disc) {
+                while((row + i) < 7){
+                        i ++;
+                        if (board[row + i][col] == EMPTY){
+                                break;
+                        }
+			else if (board[row + i][col] != disc){
+                                board[row + i][col] = disc;
+                        }
+                }
+        }
+
+        i = 0;
+
+        if (board[row-1][col] == !disc) {
+                while((row - i) > 0){
+                        i ++;
+                        if (board[row - i][col] == EMPTY){
+                                break;
+                        }
+			else if (board[row - i][col] != disc){
+                                board[row - i][col] = disc;
+                        }
+                }
+        }
+	// Left/right 
+        j = 0;
+        if (board[row][col+1] == !disc) {
+                while((col + i) < 7){
+                        j ++;
+                        if (board[row][col + j] == EMPTY){
+                                break;
+                        }
+			else if (board[row][col + j] != disc){
+                                board[row][col + j] = disc;
+                        }
+                }
+        }
+
+        j = 0;
+        if (board[row][col-1] == !disc) {
+                while((col - i) > 0){
+                        j ++;
+                        if (board[row][col - j] == EMPTY){
+                                break;
+                        }
+			else if (board[row][col - j] != disc){
+                                board[row][col - j] = disc;
+                        }
+                }
+        }
+} // placeDiscAt
 
 // Returns true if the board is fully occupied with discs; false otherwise
 bool isBoardFull(int size, char board[][size])
 {
-	return false; // REPLACE THIS WITH YOUR IMPLEMENTATION
+	for (int i = 0; i < 8; i++){
+		for (int j = 0; j < 8; j++){
+			if (board[i][j] == EMPTY){
+				return false;
+			}
+		}	
+	}
+
+	return true;
 }
 
 // Returns true if either the board is full or a valid move is not available for either disc;
 // false otherwise
 bool isGameOver(int size, char board[][size])
 {
-	return true; // REPLACE THIS WITH YOUR IMPLEMENTATION
+	// if board is full
+	if (isBoardFull(size, board)) {
+		return true;
+	}
+	//return true; // REPLACE THIS WITH YOUR IMPLEMENTATION
 }
 
 // If there is a winner, it returns the disc (BLACK or WHITE) associated with the winner.
