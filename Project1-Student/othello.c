@@ -93,7 +93,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		return false;
 	}
 
-        if (row == 0 && col == 7) {
+        if (row == 0 && col == 7){
                 if(Left(size, board, row, col, disc) ||
                 Down(size, board, row, col, disc) ||
                 topRbotL(size, board, row, col, disc)){
@@ -101,8 +101,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
                 }
                 return false;
         }
-        else if (row == 0 && col == 0){
-                if (row == 0 && col == 7) {
+        else if (row == 0 && col == 0) {
                 if(Right(size, board, row, col, disc) ||
                 Down(size, board, row, col, disc) ||
                 topLbotR(size, board, row, col, disc)){
@@ -110,9 +109,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
                 }
                 return false;
         }
-        }
         else if (row == 7 && col == 0){
-                if (row == 0 && col == 7) {
                 if(Right(size, board, row, col, disc) ||
                 Up(size, board, row, col, disc) ||
                 botLtopR(size, board, row, col, disc)){
@@ -120,16 +117,15 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
                 }
                 return false;
         }
-        }
         else if (row == 7 && col == 7){
-        if (row == 0 && col == 7) {
                 if(Left(size, board, row, col, disc) ||
                 Up(size, board, row, col, disc) ||
                 botRtopL(size, board, row, col, disc)){
                         return true;
                 }
+                else{
                 return false;
-        }
+                }
         }
         else if (col == 0) {
                 if(Right(size, board, row, col, disc) ||
@@ -139,7 +135,9 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
                 botLtopR(size, board, row, col, disc)){
                         return true;
                 }
+                else{
                 return false;
+                }
         }
         else if (col == 7) {
                 if(Left(size, board, row, col, disc) ||
@@ -169,7 +167,9 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
                 botRtopL(size, board, row, col, disc)){
                         return true;
                 }
+                else{
                 return false;
+                }
         }
         
                 if(Left(size, board, row, col, disc) ||
