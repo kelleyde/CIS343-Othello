@@ -84,7 +84,6 @@ bool isValidMoveAvailable(int size, char board[][size], char disc){
 // Returns true if moving the disc to location row,col is valid; false otherwise
 bool isValidMove(int size, char board[][size], int row, int col, char disc)
 {
-	size = size - 1;
 
 	if (row > size || col > size || row < 0 || col < 0){
 		return false;
@@ -172,6 +171,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
                 }
                 return false;
         }
+        
                 if(Left(size, board, row, col, disc) ||
                 Right(size, board, row, col, disc) ||
                 Up(size, board, row, col, disc) ||
@@ -186,15 +186,14 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 
 } // Valid Move
 
-int  topLbotR(int size, char board[][size], int row, int col, char disc){
+int topLbotR(int size, char board[][size], int row, int col, char disc){
 	// diagonals 
 	int i = 1;
 	int j = 1;
 
 	if (board[row+1][col+1] != disc && board[row+1][col+1] != EMPTY) {
-		while((row + i) <= size || (col + j) <= size){
+		while((row + i) < size || (col + j) < size){
 			if (board[row + i][col + j] == disc){
-                                printf("row+1 col+1");
 				return 1;
 		  	}
 			else if (board[row + i][col + j] == EMPTY){
@@ -214,7 +213,6 @@ int botRtopL(int size, char board[][size], int row, int col, char disc){
 	if (board[row-1][col-1] != disc && board[row-1][col-1] != EMPTY) {
                 while((row - i) >= 0 || (col - j) >= 0){
                         if (board[row - i][col - j] == disc){
-                                printf("row-1 col-1");
                                 return 1;
                         }
                         else if (board[row - i][col - j] == EMPTY){
@@ -233,9 +231,8 @@ int botLtopR(int size, char board[][size], int row, int col, char disc){
         int j = 1;
 
 	if (board[row-1][col+1] != disc && board[row-1][col+1] != EMPTY) {
-                while((row - i) >= 0 || (col + j) <= size){
+                while((row - i) >= 0 || (col + j) < size){
                         if (board[row - i][col + j] == disc){
-                                printf("row-1 col+1");
                                 return 1;
                         }
                         else if (board[row - i][col + j] == EMPTY){
@@ -254,9 +251,8 @@ int topRbotL(int size, char board[][size], int row, int col, char disc){
         int j = 1;
 
 	if (board[row+1][col-1] != disc && board[row+1][col-1] != EMPTY) {
-                while((row + i) <= size || (col - j) >= 0){
+                while((row + i) < size || (col - j) >= 0){
                         if (board[row + i][col - j] == disc){
-                                printf("row+1 col-1");
                                 return 1;
                         }
                         else if (board[row + i][col - j] == EMPTY){
@@ -274,9 +270,8 @@ int Up(int size, char board[][size], int row, int col, char disc){
 	int i = 1;
 
 	if (board[row+1][col] != disc && board[row+1][col] != EMPTY) {
-                while((row + i) <= size){
+                while((row + i) < size){
                         if (board[row + i][col] == disc){
-                                printf("row+1");
                                 return 1;
                         }
                         else if (board[row + i][col] == EMPTY){
@@ -294,7 +289,6 @@ int Down(int size, char board[][size], int row, int col, char disc){
         if (board[row-1][col] != disc && board[row-1][col] != EMPTY) {
                 while((row - i) >= 0){
                         if (board[row - i][col] == disc){
-                                printf("row-1");
                                 return 1;
                         }
                         else if (board[row - i][col] == EMPTY){
@@ -309,9 +303,8 @@ int Down(int size, char board[][size], int row, int col, char disc){
 int Right(int size, char board[][size], int row, int col, char disc){	
 	int j = 1;
         if (board[row][col+1] != disc && board[row][col+1] != EMPTY) {
-                while((col + j) <= size){
+                while((col + j) < size){
                         if (board[row][col + j] == disc){
-                                printf("col+1");
                                 return 1;
                         }
                         else if (board[row][col + j] == EMPTY){
@@ -328,7 +321,6 @@ int Left(int size, char board[][size], int row, int col, char disc){
         if (board[row][col-1] != disc && board[row][col-1] != EMPTY) {
                 while((col - j) >= 0){
                         if (board[row][col - j] == disc){
-                                printf("col-1");
                                 return 1;
                         }
                         else if (board[row][col - j] == EMPTY){
