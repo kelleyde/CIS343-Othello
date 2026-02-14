@@ -269,12 +269,12 @@ int topRbotL(int size, char board[][size], int row, int col, char disc){
 int Up(int size, char board[][size], int row, int col, char disc){	
 	int i = 1;
 
-	if (board[row+1][col] != disc && board[row+1][col] != EMPTY) {
-                while((row + i) < size){
-                        if (board[row + i][col] == disc){
+	if (board[row-1][col] != disc && board[row-1][col] != EMPTY) {
+                while((row - i) >= 0){
+                        if (board[row - i][col] == disc){
                                 return 1;
                         }
-                        else if (board[row + i][col] == EMPTY){
+                        else if (board[row - i][col] == EMPTY){
                                 break;
                         }
                         i ++;
@@ -286,12 +286,12 @@ int Up(int size, char board[][size], int row, int col, char disc){
 int Down(int size, char board[][size], int row, int col, char disc){
 	int i = 1;
 	
-        if (board[row-1][col] != disc && board[row-1][col] != EMPTY) {
-                while((row - i) >= 0){
-                        if (board[row - i][col] == disc){
+        if (board[row+1][col] != disc && board[row+1][col] != EMPTY) {
+                while((row + i) < size){
+                        if (board[row + i][col] == disc){
                                 return 1;
                         }
-                        else if (board[row - i][col] == EMPTY){
+                        else if (board[row + i][col] == EMPTY){
                                 break;
                         }
                         i ++;
@@ -338,7 +338,6 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 {
 	if (!isValidMove(size, board, row, col, disc))
 	{	
-		// printf("Is not valid move");
 		return;
 	}
 	
