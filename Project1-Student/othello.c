@@ -341,22 +341,21 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 		return;
 	}
 	
-	size = size - 1; 	
+	// size = size - 1; 	
 
 	board[row][col] = disc;
 
 	// // diagonals
-        int i = 0;
-        int j = 0;
+        int i = 1;
+        int j = 1;
 
         if (board[row+1][col+1] != disc && board[row+1][col+1] != EMPTY) {
-                while((row + i) <= size || (col + j) <= size){
-                        i ++;
-                        j ++;
+                while((row + i) < size || (col + j) <= size){
                         if (board[row + i][col + j] == EMPTY){
                                 break;
                         }
 			else if (board[row + i][col + j] == disc){
+                                printf("row +1 col+1 \n");
 				while ((row + i) != row || (col + j) != col){
 					i --;
 					j --;
@@ -364,19 +363,20 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 				}
                                 break;
                         }
+                        i ++;
+                        j ++;
                 }
         }
-        i = 0;
-        j = 0;
+        i = 1;
+        j = 1;
 
         if (board[row-1][col-1] != disc && board[row-1][col-1] != EMPTY) {
                 while((row - i) >= 0 || (col - j) >= 0){
-                        i ++;
-                        j ++;
                         if (board[row - i][col - j] == EMPTY){
                                 break;
                         }
                         else if (board[row - i][col - j] == disc){
+                                printf("row -1 col-1 \n");
                                 while ((row - i) != row || (col - j) != col){
                                         i --;
                                         j --;
@@ -384,19 +384,20 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
                                 }
                                 break;
                         }
-                }
-        }
-	i = 0;
-	j = 0;
-
-        if (board[row-1][col+1] != disc && board[row-1][col+1] != EMPTY) {
-                while((row - i) >= 0 || (col + j) <= size){
                         i ++;
                         j ++;
+                }
+        }
+	i = 1;
+	j = 1;
+
+        if (board[row-1][col+1] != disc && board[row-1][col+1] != EMPTY) {
+                while((row - i) >= 0 || (col + j) < size){
                         if (board[row - i][col + j] == EMPTY){
                                 break;
                         }
                         else if (board[row - i][col + j] == disc){
+                                printf("row -1 col+1 \n");
                                 while ((row - i) != row || (col + j) != col){
                                         i --;
                                         j --;
@@ -404,19 +405,20 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
                                 }
                                 break;
                         }
-		}
-        }
-        i = 0;
-        j = 0;
-
-        if (board[row+1][col-1] != disc && board[row+1][col-1] != EMPTY) {
-                while((row + i) <= size || (col - j) >= 0){
                         i ++;
                         j ++;
+		}
+        }
+        i = 1;
+        j = 1;
+
+        if (board[row+1][col-1] != disc && board[row+1][col-1] != EMPTY) {
+                while((row + i) < size || (col - j) >= 0){
                         if (board[row + i][col - j] == EMPTY){
                                 break;
                         }
                         else if (board[row + i][col - j] == disc){
+                                printf("row +1 col-1 \n");
                                 while ((row + i) != row || (col - j) != col){
                                         i --;
                                         j --;
@@ -424,76 +426,82 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
                                 }
                                 break;
                         }
+                        i ++;
+                        j ++;
                 }
         }
 	// Up/down
-	i = 0;
+	i = 1;
 
         if (board[row+1][col] != disc && board[row+1][col] != EMPTY) {
-                while((row + i) <= size){
-                        i ++;
+                while((row + i) < size){
                         if (board[row + i][col] == EMPTY){
                                 break;
                         }
                         else if (board[row + i][col] == disc){
+                                printf("row +1 \n");
                                 while ((row + i) != row){
                                         i --;
                                         board[row + i][col] = disc;
                                 }
                                 break;
                         }
+                        i ++;
                 }
         }
 
-        i = 0;
+        i = 1;
 
         if (board[row-1][col] != disc && board[row-1][col] != EMPTY) {
                 while((row - i) >= 0){
-                        i ++;
                         if (board[row - i][col] == EMPTY){
                                 break;
                         }
                         else if (board[row - i][col] == disc){
+                                printf("row -1 \n");
                                 while ((row - i) != row){
                                         i --;
                                         board[row - i][col] = disc;
                                 }
                                 break;
                         }
+                        i ++;
                 }
         }
 	// // Left/right 
-        j = 0;
+        j = j;
         if (board[row][col+1] != disc && board[row][col+1] != EMPTY) {
-                while((col + j) <= size){
-                        j ++;
+                while((col + j) < size){
                         if (board[row][col + j] == EMPTY){
                                 break;
                         }
-                        if (board[row][col + j] == disc){
+                        else if (board[row][col + j] == disc){
+                                printf("col+1 \n");
                                 while ((col + j) != col){
                                         j --;
                                         board[row][col + j] = disc;
                                 }
                                 break;
                         }
+                        j ++;
                 }
         }
 
-        j = 0;
+        j = 1;
         if (board[row][col-1] != disc && board[row][col-1] != EMPTY) {
                 while((col - j) >= 0){
-                        j ++;
                         if (board[row][col - j] == EMPTY){
                                 break;
                         }
-                        if (board[row][col - j] == disc){
+                        else if (board[row][col - j] == disc){
+                                printf("col -1 \n");
                                 while ((col - j) != col){
                                         j --;
                                         board[row][col - j] = disc;
                                 }
                                 break;
                         }
+                        j ++;
                 }
         }
 
